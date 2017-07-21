@@ -54,6 +54,7 @@ const
 const
   FirstColor  = clBlue;
   SecondColor = clGreen;
+  BackColor   = clLtGray;
 
   InitY = 10;
   InitX = 10;
@@ -70,12 +71,11 @@ const
 
 procedure TForm1.FormPaint(Sender: TObject);
 var
-  i : integer;
   x,y: integer;
   pm  : TPenMode;
 begin
   Canvas.Brush.Style:=bsSolid;
-  Canvas.Brush.Color:=clLtGray;
+  Canvas.Brush.Color:=BackColor;
   Canvas.FillRect(ClientRect);
   y:=InitY;
   x:=Initx;
@@ -83,8 +83,8 @@ begin
   Canvas.Pen.Width:=5;
   Canvas.Brush.Style:=bsClear;
   for pm:=Low(pm) to High(pm) do begin
-    if y>ClientHeight - 40 then begin
-      y:=10;
+    if y>ClientHeight - TestH then begin
+      y:=InitY;
       x:=x+TestW;
     end;
     Canvas.TextOut(x,y, PenTest[pm].name);
