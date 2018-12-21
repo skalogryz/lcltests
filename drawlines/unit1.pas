@@ -37,27 +37,45 @@ procedure TForm1.DrawToCanvas(dst: TCanvas);
 var
   y : integer;
   i : integer;
+  x : integer;
 const
-  w: array [0..1] of integer = (1, 10);
-  yofs: array [0..1] of integer = (10, 50);
+  w    : array [0..2] of integer = (1,  10, 1);
+  yofs : array [0..2] of integer = (10, 50, 50);
+  clr  : array [0..2] of TColor  = (clblue, clblue, clLime);
+  draw : array [0..2] of boolean = (true, true, true);
 begin
   for i:=low(yofs) to high(yofs) do begin
+    if not draw[i] then continue;
+    x:=10;
     y:=yofs[i];
-    dst.Pen.Color:=clBlue;
+    dst.Brush.Style:=bsClear;
+    dst.Pen.Color:=clr[i];
     dst.Pen.Width:=w[i];
     dst.Pen.EndCap:=pecFlat;
-    dst.Line(10,y,11,y);
+    dst.Pen.JoinStyle:=pjsMiter;
+    dst.Line(x,y,x+1,y);
+    inc(x,20);
 
-    dst.Line(20,y,20,y+1);
+    dst.Line(x,y,x,y+1);
+    inc(x,20);
 
-    dst.MoveTo(30, y);
-    dst.LineTo(40, y);
+    dst.Line(x,y,x+1,y+1);
+    inc(x,20);
 
-    dst.MoveTo(50, y);
-    dst.LineTo(50, y+10);
+    dst.MoveTo(x, y);
+    dst.LineTo(x+10, y);
+    inc(x,20);
 
-    dst.MoveTo(60, y);
-    dst.LineTo(60+10, y+10);
+    dst.MoveTo(x, y);
+    dst.LineTo(x, y+10);
+    inc(x,20);
+
+    dst.MoveTo(x, y);
+    dst.LineTo(x+10, y+10);
+    inc(x,20);
+
+    dst.Rectangle(x, y, x+10, y+10);
+
   end;
 
 //  dst.Line(10,10,11,11);
